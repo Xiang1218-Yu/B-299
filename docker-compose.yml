@@ -1,0 +1,27 @@
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: shopping-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - sqlite_data:/app/prisma
+    environment:
+      - NODE_ENV=production
+    depends_on: []
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: shopping-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+volumes:
+  sqlite_data:
+    driver: local

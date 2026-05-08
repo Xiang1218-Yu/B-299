@@ -1,0 +1,23 @@
+{
+  "name": "shopping-backend",
+  "version": "1.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.3.0",
+    "@prisma/client": "^5.14.0",
+    "fastify": "^4.26.2",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "prisma": "^5.14.0",
+    "typescript": "^5.6.3",
+    "@types/node": "^20.12.7"
+  },
+  "prisma": {
+    "seed": "node dist/prisma/seed.js"
+  }
+}
