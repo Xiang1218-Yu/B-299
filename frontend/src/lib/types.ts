@@ -26,3 +26,23 @@ export type CartItem = {
   quantity: number;
 };
 
+// 订单条目类型，对应后端 OrderItem 模型
+export type OrderItem = {
+  id: number;
+  orderId: number;
+  productId: number;
+  quantity: number;
+  unitCents: number;
+};
+
+// 订单类型，对应后端 Order 模型
+export type Order = {
+  id: number;
+  createdAt: string;
+  totalCents: number;
+  customerName: string;
+  email: string;
+  address: string;
+  items?: OrderItem[];
+};
+

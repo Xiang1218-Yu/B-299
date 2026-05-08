@@ -10,6 +10,23 @@ const orderSchema = zod_1.z.object({
     items: zod_1.z.array(zod_1.z.object({ productId: zod_1.z.number().int().positive(), quantity: zod_1.z.number().int().positive() })).min(1),
 });
 const ordersRoutes = async (app) => {
+    // 订单列表接口：按创建时间倒序返回所有订单，支持分页
+    app.get("/", async (req) => {
+        const page = Math.max(1, Number(req.query.page) || 1);
+        const limit = Math.min(100, Math.max(1, Number(req.query.limit) || 10));
+        const skip = (page - 1) * limit;
+        // 按创建时间倒序查询订单列表
+        const [items, total] = await Promise.all([
+            db_1.prisma.order.findMany({
+                orderBy: { createdAt: "desc" },
+                skip,
+                take: limit,
+            }),
+            db_1.prisma.order.count(),
+        ]);
+        return { items, page, limit, total };
+    });
+    // 创建订单接口：校验商品库存，事务创建订单及扣减库存
     app.post("/", async (req) => {
         const body = orderSchema.parse(req.body);
         const products = await db_1.prisma.product.findMany({
@@ -56,6 +73,7 @@ const ordersRoutes = async (app) => {
         });
         return { id: order.id, totalCents };
     });
+    // 订单详情接口：根据订单 ID 查询订单及其关联的商品条目
     app.get("/:id", async (req) => {
         const id = parseInt(req.params.id, 10);
         const order = await db_1.prisma.order.findUnique({
