@@ -19,10 +19,42 @@ export type Paged<T> = {
   page: number;
   limit: number;
   total: number;
+  totalPages: number;
+};
+
+export type User = {
+  id: number;
+  name: string;
+  email: string;
+};
+
+export type AuthResponse = {
+  token: string;
+  user: User;
 };
 
 export type CartItem = {
   product: Product;
   quantity: number;
+};
+
+// 订单项类型
+export type OrderItem = {
+  id: number;
+  orderId: number;
+  productId: number;
+  quantity: number;
+  unitCents: number;
+};
+
+// 订单类型
+export type Order = {
+  id: number;
+  createdAt: string;
+  totalCents: number;
+  customerName: string;
+  email: string;
+  address: string;
+  items?: OrderItem[];
 };
 
