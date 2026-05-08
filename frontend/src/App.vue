@@ -5,6 +5,7 @@
         <router-link to="/" class="text-xl font-semibold">商城系统</router-link>
         <nav class="flex items-center gap-4">
           <router-link to="/cart" class="px-3 py-2 rounded hover:bg-gray-100">购物车</router-link>
+          <router-link to="/orders" class="px-3 py-2 rounded hover:bg-gray-100">我的订单</router-link>
         </nav>
       </div>
     </header>

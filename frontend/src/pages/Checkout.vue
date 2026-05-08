@@ -60,6 +60,8 @@ async function submit() {
     };
     const { data } = await api.post<{ id: number }>("/orders", payload);
     orderId.value = data.id;
+    // 下单成功后将 email 存入 localStorage，用于订单列表查询的身份标识
+    localStorage.setItem("userEmail", form.email);
     cart.clear();
   } catch (e: any) {
     error.value = e?.response?.data?.message || "下单失败";
